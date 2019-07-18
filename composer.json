@@ -1,0 +1,20 @@
+{
+  "name": "Smart MVC",
+  "authors": [
+    {
+      "name": "Moaz Amin",
+      "email": "moazamin6@gmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Application\\": "application",
+      "Core\\": "core"
+    },
+    "files": [
+      "core/smart_helper.php"
+    ]
+
+  }
+}
