@@ -1,4 +1,4 @@
 <?php
 
 
-print_r($data['name']);
+print_r($data);

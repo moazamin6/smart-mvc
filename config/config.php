@@ -18,6 +18,6 @@ define('APPROOT', dirname(dirname(__FILE__)));
 
 define('CONTROLLER_PATH', APPROOT . '/application/controllers');
 
-define('URLROOT', 'http://localhost:8080/smart_mvc');
+define('URLROOT', 'http://localhost:8080/smart_mvc_git');
 
 define('SITENAME', 'SMART MVC');

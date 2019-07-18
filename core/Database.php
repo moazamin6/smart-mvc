@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: moaza
+ * User.php: moaza
  * Date: 6/9/2019
  * Time: 2:39 PM
  */
@@ -15,6 +15,7 @@ use PDOException;
 class Database
 {
     private static $con = null;
+    private static $table = null;
     private static $options = array(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
@@ -29,16 +30,30 @@ class Database
         try {
 
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
-            Database::$con = new PDO($dsn, DB_USER, DB_PASS, Database::$options);
-            return Database::$con;
+            self::$con = new PDO($dsn, DB_USER, DB_PASS, self::$options);
+            return self::$con;
 
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
     }
 
-    public static function fetch($table)
+    public static function fetch()
     {
-        echo "fetch from $table";
+        try {
+            $sql = "SELECT * FROM " . self::$table;
+            $stmt = self::$con->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+
+            return $result;
+        } catch (PDOException $e) {
+            smartPrint($e->getMessage());
+        }
+    }
+
+    public static function setTable($table)
+    {
+        self::$table = $table;
     }
 }

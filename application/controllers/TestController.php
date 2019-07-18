@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: moaza
+ * User.php: moaza
  * Date: 6/9/2019
  * Time: 10:56 AM
  */
@@ -17,29 +17,34 @@ class TestController extends SmartController
     public function __construct()
     {
         parent::__construct();
+        $this->loadModel('User');
     }
 
     public function index()
     {
 
-        TestModel::all();
-        $data = array(
-            'name' => 'moaz',
-            'age' => '25'
-        );
+        $data['users'] = TestModel::all();
+
         $this->loadView('cell/view', $data);
         //echo 'test controller index'.'<br>';
     }
 
-    public function test()
+    public function test($id)
     {
 
+        smartPrint($id);
         echo 'test controller test function' . '<br>';
     }
 
-    public function add()
+    public function add($id, $age, $name)
     {
 
+        smartPrint($id . ' -- ' . $age . ' -- ' . $name);
         echo 'this is add function from test controller' . '<br>';
+    }
+
+    public function display($item)
+    {
+        smartPrint($item);
     }
 }

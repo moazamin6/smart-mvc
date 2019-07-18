@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: moaza
+ * User.php: moaza
  * Date: 6/9/2019
  * Time: 2:39 PM
  */
@@ -11,11 +11,12 @@ namespace Core;
 
 class SmartModel
 {
-    protected $table;
+    private static $table;
 
-    public function __construct()
+    public function __construct($table)
     {
-
+        self::$table = $table;
+        Database::setTable($table);
     }
 
     public static function initializeDB()
@@ -26,7 +27,7 @@ class SmartModel
 
     public static function all()
     {
-        //Database::fetch($this->table);
+        return Database::fetch();
     }
 
     public function setTable($table)

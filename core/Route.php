@@ -6,20 +6,21 @@ namespace Core;
 
 class Route
 {
-    private $url_array = array();
+    public $url_array = array();
     private $controller_path;
-    private $parameters = null;
+    private $parameters = [];
+    private $url_action = '';
 
     public function __construct()
     {
         $this->controller_path = APPROOT . '/application/controllers';
+        session_start();
     }
 
     public function setRoute($uri = null, $action = null)
     {
         $seg_count = 0;
         $param_count = 0;
-        echo '<pre>';
         if ($uri !== '/') {
             $url_segments = explode('/', $uri);
         } else {
@@ -34,45 +35,52 @@ class Route
                 $param_count++;
             }
         }
-        $uri = rtrim($uri, '/');
-        $uri = filter_var($uri, FILTER_SANITIZE_URL);
+        if ($uri != '/') {
+            $uri = rtrim($uri, '/');
+        }
 
+        $uri = filter_var($uri, FILTER_SANITIZE_URL);
+        $uri_with_no_params = $this->getURIWithoutParams($uri);
         $diff = $seg_count - $param_count;
         //$uri = '{' . substr($uri, strpos($uri, "{") + 1);
         //$this->url_array[$uri] = $action;
         $this->url_array[] = array(
             'uri' => $uri,
+            'uri_no_params' => $uri_with_no_params,
             'action' => $action,
             'segments' => $seg_count,
             'params' => $param_count,
             'diff' => $diff,
         );
+
+        $_SESSION["url_array"] = $this->url_array;
     }
 
     public function loadRoute()
     {
-        print_r($this->url_array);
+        //print_r($this->url_array);
         $url = $this->getUrl();
-        echo $url;
-        $this->verifyRoute($url);
-        if (array_key_exists($url, $this->url_array)) {
+        //echo $url;
 
-            $action = $this->url_array[$url];
-            $controllerName = explode('@', $action)[0];
-            $functionName = explode('@', $action)[1];
+
+        if ($this->verifyRoute($url)) {
+
+            $controllerName = explode('@', $this->url_action)[0];
+            $functionName = explode('@', $this->url_action)[1];
 
             if ($path = researchFile($this->controller_path, $controllerName . '.php')) {
 
                 //echo CONTROLLER_PATH . '/' . $controllerName . '.php';
                 //$path = CONTROLLER_PATH . '/' . $controllerName . '.php';
 
+
                 $namespace = extractNamespace($path) . "\\" . $controllerName;
+
                 $controllerOBJ = new $namespace();
-                //$controllerOBJ = new $controllerName();
 
                 if (method_exists($namespace, $functionName)) {
 
-                    call_user_func_array([$controllerOBJ, $functionName], []);
+                    call_user_func_array([$controllerOBJ, $functionName], $this->parameters);
                 } else {
                     echo 'method not found';
                 }
@@ -102,47 +110,96 @@ class Route
 
     private function verifyRoute($url)
     {
-        if ($url == '/') {
-            return true;
-        }
-        $url_seg = explode('/', $url);
-        //print_r($url_seg);
         foreach ($this->url_array as $stored_uri) {
 
-            for ($i = 0; $i < $stored_uri['diff']; $i++) {
 
-                echo $stored_uri['uri'];
-                echo '<br>';
-                //$this->matchURI($url_seg, $stored_uri['uri'], $stored_uri['diff']);
+            $is_matched = $this->matchURI($url, $stored_uri['uri_no_params'], $stored_uri['diff'], $stored_uri['segments'], $stored_uri['params']);
+            if ($is_matched) {
 
+                //print_r($stored_uri);
+                $this->url_action = $stored_uri['action'];
+                return true;
             }
-            echo '<br>';
-            //print_r($stored_uri['uri'] . '/////');
+
+        }
+        return false;
+    }
+
+    private function matchURI($url_seg, $no_params_uri, $diff_count, $segs, $params)
+    {
+
+        $parsed_url = $this->parseURL($url_seg, $diff_count, $segs, $params);
+        if (count(explode("/", $parsed_url)) == $diff_count) {
+
+
+            if ($parsed_url == $no_params_uri) {
+
+                return true;
+            }
+
+        } else {
+            return false;
         }
     }
 
-    private function matchURI($url_seg, $diff, $count)
+    private function getURIWithoutParams($uri)
     {
-        $diff_array = explode('/', $diff);
-        print_r($diff);
-        $correction = 0;
-        foreach ($url_seg as $u) {
-            foreach ($diff_array as $u2) {
+        //return $uri;
+        $url = '';
+        if (preg_match('/{/', $uri)) {
 
-                echo $u . ' == ' . $u2;
-                echo '<br>';
-//                if ($u == $u2l) {
-//                    $correction++;
-//                    if ($correction == $count) {
-//                        die('matched');
-//                        return true;
-//                    }
-//                    //break;
-//                }
 
+            $segs = explode("/", $uri);
+
+            foreach ($segs as $s) {
+                if (!preg_match('/{/', $s)) {
+                    $url = $url . '/' . $s;
+                }
+            }
+            $url = ltrim($url, '/');
+            return $url;
+        } else {
+            return $uri;
+        }
+    }
+
+    private function parseURL($url, $count, $segs, $params)
+    {
+        $this->parameters = array();
+        if ($url == '/') {
+            return true;
+        }
+        $url = explode("/", $url);
+
+        $parsed_url = '';
+        $params_array = array_reverse($url);
+        //print_r($params_array);
+        if ($params != 0) {
+            for ($i = $params - 1; $i >= 0; $i--) {
+
+                $this->parameters[] = $params_array[$i];
             }
         }
-        die('No matched');
-        return false;
+        if ($count == 1) {
+
+            if (count($url) == $segs) {
+                return $url[0];
+            }
+
+        }
+        for ($i = 0; $i < $count; $i++) {
+            if (count($url) == $segs) {
+                $parsed_url = $parsed_url . '/' . $url[$i];
+            }
+
+        }
+
+        $parsed_url = ltrim($parsed_url, '/');
+        return $parsed_url;
+    }
+
+    public function getU()
+    {
+        return $this->url_array;
     }
 }

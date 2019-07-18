@@ -6,14 +6,16 @@
  * Time: 11:03 PM
  */
 
+// give namespace till folder name in which this file exist
 namespace Application\Models;
 
 
 use Core\SmartModel;
 
-class TestModel extends SmartModel
+class Model extends SmartModel
 {
-    private $table = 'moaz';
+    //give that table name that you want to access from this model file
+    private $table = 'user';
 
     public function __construct()
     {

@@ -28,3 +28,26 @@ function researchFile($folder, $pattern)
     }
     return false;
 }
+
+function smartPrint($txt)
+{
+    echo '<br>';
+    echo $txt;
+    echo '<br>';
+}
+
+function assets($url = null)
+{
+    if ($url == null) {
+        return URLROOT . '/public';
+    }
+
+    return URLROOT . '/public/' . $url;
+
+}
+
+function url($url)
+{
+
+    return URLROOT . '/public/' . $url;
+}

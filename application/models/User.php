@@ -11,9 +11,9 @@ namespace Application\Models;
 
 use Core\SmartModel;
 
-class TestModel extends SmartModel
+class User extends SmartModel
 {
-    private $table = 'moaz';
+    private $table = 'user';
 
     public function __construct()
     {
