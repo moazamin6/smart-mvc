@@ -52,8 +52,6 @@ class Route
             'params' => $param_count,
             'diff' => $diff,
         );
-
-        $_SESSION["url_array"] = $this->url_array;
     }
 
     public function loadRoute()
@@ -74,6 +72,12 @@ class Route
                 //$path = CONTROLLER_PATH . '/' . $controllerName . '.php';
 
 
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+                    $this->parameters[] = $_POST;
+                }else{
+                    $this->parameters[] = $_GET;
+                }
                 $namespace = extractNamespace($path) . "\\" . $controllerName;
 
                 $controllerOBJ = new $namespace();
@@ -198,8 +202,22 @@ class Route
         return $parsed_url;
     }
 
-    public function getU()
+    public static function is($url)
     {
-        return $this->url_array;
+        $url = url($url);
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            $link = "https";
+        else
+            $link = "http";
+        $link .= "://";
+        $link .= $_SERVER['HTTP_HOST'];
+        $link .= $_SERVER['REQUEST_URI'];
+
+        if ($url == $link) {
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

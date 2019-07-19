@@ -27,12 +27,29 @@ class SmartModel
 
     public static function all()
     {
+
+        self::setTableName(get_called_class());
         return Database::fetch();
     }
 
-    public function setTable($table)
+
+    public static function delete($id)
     {
-        $this->table = $table;
-        return $this;
+        self::setTableName(get_called_class());
+        return Database::delete($id);
+    }
+
+    public static function setTableName($class)
+    {
+        self::$table = self::extractTableName($class);
+        Database::setTable(self::$table);
+    }
+
+    public static function extractTableName($class)
+    {
+        $class_array = explode('\\', $class);
+        $class_array = array_reverse($class_array);
+        $class = $class_array[0];
+        return strtolower($class) . 's';
     }
 }

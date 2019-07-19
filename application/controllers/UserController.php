@@ -3,6 +3,7 @@
 // give namespace till folder name in which this file exist
 namespace Application\Controllers;
 
+use Application\Models\User;
 use Core\SmartController;
 
 class UserController extends SmartController
@@ -12,20 +13,46 @@ class UserController extends SmartController
     {
         parent::__construct();
         //load models here
-//        $this->loadModel('User');
+
     }
 
     public function index()
     {
-        $data = 'moaz amin';
-        $this->loadView('inc/header');
-        $this->loadView('home', $data);
-        $this->loadView('inc/footer');
+        $this->loadView('index');
     }
 
-    public function home()
+    public function list()
+    {
+        $data['users'] = User::all();
+        $this->loadView('user_list', $data);
+    }
+
+    public function add()
+    {
+        $this->loadView('user_add');
+    }
+
+    public function addPost($post_values)
     {
 
-        smartPrint('this is home');
+        dd($post_values);
+    }
+
+    public function delete($id)
+    {
+        User::delete($id);
+        redirectTo('user/list');
+    }
+
+    public function update($id)
+    {
+        redirectTo('/');
+        smartPrint('update -- ' . $id);
+    }
+
+    public function postCheck($data)
+    {
+        echo '<pre>';
+        print_r($data);
     }
 }

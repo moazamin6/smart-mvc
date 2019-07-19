@@ -6,7 +6,12 @@
  * */
 
 $route->setRoute('/', 'UserController@index');
-$route->setRoute('home', 'UserController@home');
-$route->setRoute('customer/display/{id}', 'TestController@display');
-$route->setRoute('test/{id}', 'TestController@test');
-$route->setRoute('customer/display/item/{id}/{age}/{name}', 'TestController@add');
+$route->setRoute('user/list', 'UserController@list');
+$route->setRoute('user/add', 'UserController@add');
+$route->setRoute('user/add_post', 'UserController@addPost');
+$route->setRoute('user/delete/{id}', 'UserController@delete');
+$route->setRoute('user/update/{id}', 'UserController@update');
+
+
+
+$route->setRoute('post_check', 'UserController@postCheck');
