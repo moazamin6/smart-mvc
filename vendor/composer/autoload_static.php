@@ -32,11 +32,22 @@ class ComposerStaticInit1d912930d38825a0b191910f72e1dddd
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'S' => 
+        array (
+            'Symfony\\Component\\Console\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/symfony/console',
+            ),
+        ),
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit1d912930d38825a0b191910f72e1dddd::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit1d912930d38825a0b191910f72e1dddd::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit1d912930d38825a0b191910f72e1dddd::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }

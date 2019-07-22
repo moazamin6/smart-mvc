@@ -13,10 +13,6 @@ use Core\SmartModel;
 
 class User extends SmartModel
 {
-    private $table = 'user';
+    public static $table = 'users';
 
-    public function __construct()
-    {
-        parent::__construct($this->table);
-    }
 }

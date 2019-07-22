@@ -13,7 +13,7 @@
 <body>
 <nav style="margin-bottom: 50px" class="navbar navbar-expand-md navbar-dark bg-dark">
    <div class="container">
-      <a class="navbar-brand <?= \Core\Route::is('list') ? 'active' : '' ?>" href="<?= url('/') ?>">Smart MVC</a>
+      <a class="navbar-brand <?= \Core\Route::is('list') ? 'active' : '' ?>" href="<?= base_url('/') ?>">Smart MVC</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
               aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
@@ -23,10 +23,10 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
          <ul class="navbar-nav mr-auto">
             <li class="nav-item <?= \Core\Route::is('user/list') ? 'active' : '' ?>">
-               <a class="nav-link" href="<?= url('user/list') ?>">List</a>
+               <a class="nav-link" href="<?= base_url('user/list') ?>">List</a>
             </li>
             <li class="nav-item <?= \Core\Route::is('user/add') ? 'active' : '' ?>">
-               <a class="nav-link" href="<?= url('user/add') ?>">Add New</a>
+               <a class="nav-link" href="<?= base_url('user/add') ?>">Add New</a>
             </li>
          </ul>
       </div>

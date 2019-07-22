@@ -2,7 +2,8 @@
 
 
 use Core\Route;
-include_once '../config/config.php';
+
+$config = include_once '../config/config.php';
 require_once '../bootstrap/bootstrap.php';
 
 //route file object for defining routes in route.php

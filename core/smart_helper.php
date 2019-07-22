@@ -48,22 +48,23 @@ if (!function_exists('assets')) {
 
     function assets($url = null)
     {
+        $asset_url = \Core\Config::get('asset_url');
         if ($url == null) {
-            return URLROOT . '/public';
+            return $asset_url;
         }
 
-        return URLROOT . '/public/' . $url;
+        return $asset_url . '/' . $url;
     }
 }
 
-if (!function_exists('url')) {
+if (!function_exists('base_url')) {
 
-    function url($url)
+    function base_url($url)
     {
         if ($url == '/') {
-            return URLROOT . '/public/';
+            return \Core\Config::get('base_url') . '/public/';
         }
-        return URLROOT . '/public/' . $url;
+        return \Core\Config::get('base_url') . '/public/' . $url;
     }
 }
 
@@ -71,8 +72,8 @@ if (!function_exists('loadPartialView')) {
 
     function loadPartialView($view, $data = [])
     {
-        $view_path = APPROOT . '/application/views';
-        $file_path = $view_path . '/' . $view . '.php';
+
+        $file_path = \Core\Config::get('view_base_url') . '/' . $view . '.php';
         if (file_exists($file_path)) {
 
             include_once $file_path;
@@ -86,7 +87,7 @@ if (!function_exists('redirectTo')) {
 
     function redirectTo($url, $permanent = false)
     {
-        $url = url($url);
+        $url = base_url($url);
         if (headers_sent() === false) {
             header('Location: ' . $url, true, ($permanent === true) ? 301 : 302);
         }
@@ -102,5 +103,14 @@ if (!function_exists('dd')) {
         print_r($args);
         echo '</pre>';
         die;
+    }
+}
+
+if (!function_exists('d')) {
+    function d($args)
+    {
+        echo '<pre>';
+        print_r($args);
+        echo '</pre>';
     }
 }

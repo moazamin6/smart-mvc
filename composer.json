@@ -6,7 +6,9 @@
       "email": "moazamin6@gmail.com"
     }
   ],
-  "require": {},
+  "require" :{
+    "symfony/console": "2.6.7"
+  },
   "autoload": {
     "psr-4": {
       "Application\\": "application",
@@ -15,6 +17,5 @@
     "files": [
       "core/smart_helper.php"
     ]
-
   }
 }

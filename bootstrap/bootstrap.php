@@ -6,6 +6,7 @@
  * Time: 8:50 PM
  */
 
+use Core\Config;
 use Core\SmartModel;
 
 /**
@@ -14,7 +15,7 @@ use Core\SmartModel;
 
 require("../vendor/autoload.php");
 
-if (DB_USAGE) {
+if (Config::get('db_name') != '') {
     SmartModel::initializeDB();
 }
 

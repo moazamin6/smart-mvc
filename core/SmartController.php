@@ -11,20 +11,18 @@ namespace Core;
 
 class SmartController
 {
-    private $view_path;
-    private $model_path;
-    protected $db;
 
     public function __construct()
     {
-        $this->view_path = APPROOT . '/application/views';
-        $this->model_path = APPROOT . '/application/models';
     }
 
     protected function loadView($view, $data = [])
     {
-        extract($data);
-        $file_path = $this->view_path . '/' . $view . '.php';
+        if (!is_object($data)) {
+            extract($data);
+        }
+
+        $file_path = Config::get('view_base_url') . '/' . $view . '.php';
         if (file_exists($file_path)) {
 
             include_once $file_path;
@@ -36,7 +34,7 @@ class SmartController
     public function loadModel($model)
     {
 
-        $file_path = $this->model_path . '/' . $model . '.php';
+        $file_path = Config::get('model_base_url') . '/' . $model . '.php';
         if (file_exists($file_path)) {
 
 

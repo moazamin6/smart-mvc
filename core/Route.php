@@ -13,8 +13,7 @@ class Route
 
     public function __construct()
     {
-        $this->controller_path = APPROOT . '/application/controllers';
-        session_start();
+
     }
 
     public function setRoute($uri = null, $action = null)
@@ -66,16 +65,16 @@ class Route
             $controllerName = explode('@', $this->url_action)[0];
             $functionName = explode('@', $this->url_action)[1];
 
-            if ($path = researchFile($this->controller_path, $controllerName . '.php')) {
+            if ($path = researchFile(Config::get('controller_base_url'), $controllerName . '.php')) {
 
                 //echo CONTROLLER_PATH . '/' . $controllerName . '.php';
                 //$path = CONTROLLER_PATH . '/' . $controllerName . '.php';
 
-
+                $request = new Request();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                    $this->parameters[] = $_POST;
-                }else{
+                    $this->parameters[] = $request->parametersToRequest($_POST);
+                } else {
                     $this->parameters[] = $_GET;
                 }
                 $namespace = extractNamespace($path) . "\\" . $controllerName;
@@ -204,7 +203,7 @@ class Route
 
     public static function is($url)
     {
-        $url = url($url);
+        $url = base_url($url);
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
             $link = "https";
         else

@@ -11,7 +11,4 @@ $route->setRoute('user/add', 'UserController@add');
 $route->setRoute('user/add_post', 'UserController@addPost');
 $route->setRoute('user/delete/{id}', 'UserController@delete');
 $route->setRoute('user/update/{id}', 'UserController@update');
-
-
-
-$route->setRoute('post_check', 'UserController@postCheck');
+$route->setRoute('user/update_post', 'UserController@update_post');

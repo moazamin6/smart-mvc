@@ -4,17 +4,12 @@
 namespace Application\Controllers;
 
 use Application\Models\User;
+use Core\Config;
+use Core\Request;
 use Core\SmartController;
 
 class UserController extends SmartController
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-        //load models here
-
-    }
 
     public function index()
     {
@@ -23,6 +18,9 @@ class UserController extends SmartController
 
     public function list()
     {
+        //dd(User::where(['name' => 'admin', 'email' => 'moazamin6@gmail.com'])->delete());
+
+        //User::where(['id' => '1'])->update(['name' => 'mmm']);
         $data['users'] = User::all();
         $this->loadView('user_list', $data);
     }
@@ -32,27 +30,43 @@ class UserController extends SmartController
         $this->loadView('user_add');
     }
 
-    public function addPost($post_values)
+    public function addPost(Request $request)
     {
 
-        dd($post_values);
+        User::insert([
+            'name' => $request->username,
+            'age' => $request->age,
+            'country' => $request->country,
+            'education' => $request->education,
+            'email' => $request->email,
+        ]);
+        redirectTo('user/list');
+        //dd($post_values);
     }
 
     public function delete($id)
     {
-        User::delete($id);
+        User::where(['id' => $id])->delete();
         redirectTo('user/list');
     }
 
     public function update($id)
     {
-        redirectTo('/');
-        smartPrint('update -- ' . $id);
+        $data = User::find($id);
+        //User::where(['name' => 'waqas', 'email' => 'test@gmail.com'])->update([]);
+        $this->loadView('update_user', $data);
     }
 
-    public function postCheck($data)
+    public function update_post(Request $request)
     {
-        echo '<pre>';
-        print_r($data);
+        //dd($request);
+        User::where(['id' => $request->user_id])->update([
+            'name' => $request->username,
+            'age' => $request->age,
+            'country' => $request->country,
+            'education' => $request->education,
+            'email' => $request->email
+        ]);
+        redirectTo('user/list');
     }
 }

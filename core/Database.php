@@ -29,8 +29,8 @@ class Database
     {
         try {
 
-            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
-            self::$con = new PDO($dsn, DB_USER, DB_PASS, self::$options);
+            $dsn = "mysql:host=" . Config::get('db_host') . ";dbname=" . Config::get('db_name');
+            self::$con = new PDO($dsn, Config::get('db_user'), Config::get('db_pass'), self::$options);
             return self::$con;
 
         } catch (PDOException $e) {
@@ -38,10 +38,9 @@ class Database
         }
     }
 
-    public static function fetch()
+    public static function fetchQuery($sql)
     {
         try {
-            $sql = "SELECT * FROM " . self::$table;
             $stmt = self::$con->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll();
@@ -55,6 +54,49 @@ class Database
     public static function setTable($table)
     {
         self::$table = $table;
+    }
+
+    public static function findQuery($sql, $data)
+    {
+        try {
+
+            $stmt = self::$con->prepare($sql);
+            $stmt->execute($data);
+            $result = $stmt->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+
+            dd($e->getMessage());
+        }
+    }
+
+    public static function insertQuery($sql, $data)
+    {
+
+        try {
+            //$sql = self::createSqlString('insert', $data);
+            $stmt = self::$con->prepare($sql);
+            $stmt->execute($data);
+        } catch (PDOException $e) {
+
+            dd($e->getMessage());
+        }
+    }
+
+    public static function updateQuery($sql, $params)
+    {
+
+        try {
+
+            $stmt = self::$con->prepare($sql);
+            $stmt->execute($params);
+            $count = $stmt->rowCount();
+            if ($count) {
+                return $count;
+            }
+        } catch (PDOException $e) {
+            smartPrint($e->getMessage());
+        }
     }
 
     public function bind($param, $value, $type = null, $stmt)
@@ -78,15 +120,13 @@ class Database
         $stmt->bindValue($param, $value, $type);
     }
 
-    public static function delete($id)
+    public static function deleteQuery($sql, $params)
     {
+
         try {
-            $id = (int)$id;
-            $sql = 'DELETE FROM ' . self::$table . ' WHERE id = :id';
 
             $stmt = self::$con->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
+            $stmt->execute($params);
             $count = $stmt->rowCount();
             if ($count) {
                 return $count;
@@ -94,6 +134,5 @@ class Database
         } catch (PDOException $e) {
             smartPrint($e->getMessage());
         }
-
     }
 }
