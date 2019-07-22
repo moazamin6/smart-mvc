@@ -14,5 +14,4 @@ use Core\SmartModel;
 class User extends SmartModel
 {
     public static $table = 'users';
-
 }

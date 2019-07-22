@@ -3,8 +3,9 @@
 require __DIR__ . '/vendor/autoload.php';
 
 
-use Core\CommandLine\CreateController;
+use Core\CommandLine\MakeController;
 use Core\CommandLine\GreetCommand;
+use Core\CommandLine\MakeModel;
 use Symfony\Component\Console\Application;
 
 
@@ -12,7 +13,8 @@ try {
 
     $application = new Application();
     $application->add(new GreetCommand());
-    $application->add(new CreateController());
+    $application->add(new MakeController());
+    $application->add(new MakeModel());
     $application->run();
 } catch (Exception $e) {
 

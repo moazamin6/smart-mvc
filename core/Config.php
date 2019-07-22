@@ -13,7 +13,7 @@ class Config
 {
     public static function get($key='')
     {
-        $config = include '../config/config.php';
+        $config = include dirname(dirname(__FILE__)).'/config/config.php';
 
         if($key==''){
             return $config;

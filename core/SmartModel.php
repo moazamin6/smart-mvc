@@ -83,11 +83,16 @@ class SmartModel
 
     public static function setTableName($class)
     {
-        if ($class::$table == '') {
-            self::$table = self::extractTableName($class);
+        if (isset($class::$table)) {
+            if ($class::$table == '') {
+                self::$table = self::extractTableName($class);
+            } else {
+                self::$table = $class::$table;
+            }
         } else {
-            self::$table = $class::$table;
+            self::$table = self::extractTableName($class);
         }
+
         Database::setTable(self::$table);
     }
 

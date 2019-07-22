@@ -4,7 +4,6 @@
 namespace Application\Controllers;
 
 use Application\Models\User;
-use Core\Config;
 use Core\Request;
 use Core\SmartController;
 

@@ -1,23 +1,39 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: moaza
- * Date: 5/29/2019
- * Time: 11:15 PM
- */
+return [
+
+    'app_name' => 'Smart MVC',
 
 
-//Database config values
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', 'admin');
-define('DB_NAME', 'smart_mvc');
-define('DB_USAGE', true);
+    'base_url' => 'http://localhost:8080/smart_mvc_git',
 
-define('APPROOT', dirname(dirname(__FILE__)));
 
-define('CONTROLLER_PATH', APPROOT . '/application/controllers');
+    'app_root' => dirname(dirname(__FILE__)),
 
-define('URLROOT', 'http://localhost:8080/smart_mvc_git');
 
-define('SITENAME', 'SMART MVC');
+    'asset_url' => 'http://localhost:8080/smart_mvc_git/public',
+
+
+    'model_base_url' => dirname(dirname(__FILE__)) . '/application/models',
+
+
+    'model_namespace' => 'Application\Models',
+
+
+    'view_base_url' => dirname(dirname(__FILE__)) . '/application/views',
+
+
+    'controller_base_url' => dirname(dirname(__FILE__)) . '/application/controllers',
+
+
+    'controller_namespace' => 'Application\Controllers',
+
+
+    //database configuration
+    'db_host' => 'localhost',
+
+    'db_user' => 'root',
+
+    'db_pass' => 'admin',
+
+    'db_name' => 'smart_mvc',
+];
