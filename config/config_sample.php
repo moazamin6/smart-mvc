@@ -3,8 +3,10 @@ return [
 
     'app_name' => 'Smart MVC',
 
+    'app_url' => 'http://localhost:8080/smart_mvc_git',
 
-    'base_url' => 'http://localhost:8080/smart_mvc_git',
+
+    'base_url' => 'http://localhost:8080/smart_mvc_git/public',
 
 
     'app_root' => dirname(dirname(__FILE__)),
@@ -26,6 +28,9 @@ return [
 
 
     'controller_namespace' => 'Application\Controllers',
+
+
+    'core_view_base_url' => dirname(dirname(__FILE__)) . '/core/views',
 
 
     //database configuration
