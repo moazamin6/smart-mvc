@@ -63,7 +63,6 @@ class MakeModel extends Command
                     mkdir(dirname($path_to_create_file), 0777, true);
                 }
 
-
                 if (file_put_contents($path_to_create_file, $file_contents)) {
 
                     $message = 'Model Created Successfully';

@@ -18,17 +18,20 @@ class SmartController
 
     protected function loadView($view, $data = [])
     {
-        if (!is_object($data)) {
-            extract($data);
-        }
-
-        $file_path = Config::get('view_base_url') . '/' . $view . '.php';
-        if (file_exists($file_path)) {
-
-            include_once $file_path;
-        } else {
-            die('view not found');
-        }
+        loadPartialView($view, $data);
+//        if (!is_object($data)) {
+//            extract($data);
+//        }
+//
+//        $file_path = Config::get('view_base_url') . '/' . $view . '.php';
+//        if (file_exists($file_path)) {
+//
+//            return include_once $file_path;
+//            return;
+//        } else {
+//            smartPrint('View Not Found');
+//            return;
+//        }
     }
 
     public function loadModel($model)
@@ -39,9 +42,12 @@ class SmartController
 
 
             $model_namespace = extractNamespace($file_path) . "\\" . $model;
-            new $model_namespace();
+            $this->{strtolower($model)} = new $model_namespace();
         } else {
-            smartPrint('Model not found');
+
+
+            include_once \Core\Config::get('core_view_base_url') . '/view_not_found.php';
+            die();
         }
     }
 }

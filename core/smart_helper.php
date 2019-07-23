@@ -59,7 +59,7 @@ if (!function_exists('assets')) {
 
 if (!function_exists('base_url')) {
 
-    function base_url($url)
+    function base_url($url = '')
     {
         if ($url == '/') {
             return \Core\Config::get('base_url') . '/public/';
@@ -68,17 +68,32 @@ if (!function_exists('base_url')) {
     }
 }
 
+if (!function_exists('app_url')) {
+
+    function app_url($url = '')
+    {
+        if ($url == '/') {
+            return \Core\Config::get('app_url');
+        }
+        return \Core\Config::get('app_url') . '/' . $url;
+    }
+}
+
 if (!function_exists('loadPartialView')) {
 
     function loadPartialView($view, $data = [])
     {
+        if (!is_object($data)) {
+            extract($data);
+        }
 
         $file_path = \Core\Config::get('view_base_url') . '/' . $view . '.php';
         if (file_exists($file_path)) {
 
             include_once $file_path;
         } else {
-            die('view not found');
+            include_once \Core\Config::get('core_view_base_url') . '/view_not_found.php';
+            die();
         }
     }
 }
@@ -112,5 +127,12 @@ if (!function_exists('d')) {
         echo '<pre>';
         print_r($args);
         echo '</pre>';
+    }
+}
+
+if (!function_exists('instance')) {
+    function instance($fname, $lname, $type)
+    {
+        return $type($fname . ' ' . $lname);
     }
 }

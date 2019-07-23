@@ -1,7 +1,5 @@
 <?php
 
-
-use Core\Config;
 use Core\Route;
 
 require_once '../bootstrap/bootstrap.php';

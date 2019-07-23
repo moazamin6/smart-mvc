@@ -85,14 +85,14 @@ class Route
 
                     call_user_func_array([$controllerOBJ, $functionName], $this->parameters);
                 } else {
-                    echo 'method not found';
+                    include_once \Core\Config::get('core_view_base_url') . '/method_not_found.php';
                 }
             } else {
-                echo 'controller not found';
+                include_once \Core\Config::get('core_view_base_url') . '/controller_not_found.php';
             }
 
         } else {
-            echo 'url not found';
+            include_once \Core\Config::get('core_view_base_url') . '/url_not_found.php';
             exit(1);
         }
     }
