@@ -62,9 +62,9 @@ if (!function_exists('base_url')) {
     function base_url($url = '')
     {
         if ($url == '/') {
-            return \Core\Config::get('base_url') . '/public/';
+            return \Core\Config::get('base_url') . '/';
         }
-        return \Core\Config::get('base_url') . '/public/' . $url;
+        return \Core\Config::get('base_url') . '/' . $url;
     }
 }
 
@@ -130,9 +130,22 @@ if (!function_exists('d')) {
     }
 }
 
-if (!function_exists('instance')) {
-    function instance($fname, $lname, $type)
+if (!function_exists('loadCoreView')) {
+
+    function loadCoreView($view, $data = [])
     {
-        return $type($fname . ' ' . $lname);
+        if (!is_object($data)) {
+            extract($data);
+        }
+
+        $file_path = \Core\Config::get('core_view_base_url') . '/' . $view . '.php';
+        if (file_exists($file_path)) {
+
+            include_once $file_path;
+        } else {
+            include_once \Core\Config::get('core_view_base_url') . '/view_not_found.php';
+
+        }
+        die();
     }
 }

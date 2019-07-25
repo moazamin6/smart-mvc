@@ -115,3 +115,7 @@ body {
         font-size: 22px;
     }
 }
+
+.error_args{
+    color: red;
+}

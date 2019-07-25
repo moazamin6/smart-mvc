@@ -12,14 +12,13 @@ class UserController extends SmartController
 
     public function __construct()
     {
-        $this->loadModel('Test');
+
     }
 
     public function index()
     {
 
         $this->loadView('index');
-        $this->test->getter();
     }
 
     public function list()

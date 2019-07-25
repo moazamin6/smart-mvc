@@ -12,9 +12,6 @@ class Test extends SmartModel
     public function getter()
     {
 
-        instance('Moaz', 'Amin', function ($name) {
 
-            smartPrint($name);
-        });
     }
 }

@@ -7,9 +7,9 @@ namespace Core;
 class Route
 {
     public $url_array = array();
-    private $controller_path;
     private $parameters = [];
     private $url_action = '';
+    private $url = '';
 
     public function __construct()
     {
@@ -85,14 +85,18 @@ class Route
 
                     call_user_func_array([$controllerOBJ, $functionName], $this->parameters);
                 } else {
-                    include_once \Core\Config::get('core_view_base_url') . '/method_not_found.php';
+                    $data['name'] = $this->url_action;
+                    loadCoreView('method_not_found', $data);
+
                 }
             } else {
-                include_once \Core\Config::get('core_view_base_url') . '/controller_not_found.php';
+                $data['name'] = $this->url_action;
+                loadCoreView('controller_not_found', $data);
             }
 
         } else {
-            include_once \Core\Config::get('core_view_base_url') . '/url_not_found.php';
+            $data['name'] = $_SERVER['REQUEST_URI'];
+            loadCoreView('url_not_found', $data);
             exit(1);
         }
     }
@@ -121,6 +125,7 @@ class Route
 
                 //print_r($stored_uri);
                 $this->url_action = $stored_uri['action'];
+                $this->url = $stored_uri['uri'];
                 return true;
             }
 

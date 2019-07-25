@@ -19,7 +19,7 @@
         <div class="notfound-404">
             <h1>404</h1>
         </div>
-        <h2>Oops! <strong>Controller</strong>  was not found</h2>
+        <h2 class="error_args">Oops! <strong>Controller</strong>  was not found in </h2><h3>Error in :<?=$name?></h3>
         <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable. <a href="#">Return to homepage</a></p>
     </div>
 </div>

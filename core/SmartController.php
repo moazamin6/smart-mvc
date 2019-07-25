@@ -45,8 +45,8 @@ class SmartController
             $this->{strtolower($model)} = new $model_namespace();
         } else {
 
-
-            include_once \Core\Config::get('core_view_base_url') . '/view_not_found.php';
+            $data['name'] = $model . '.php';
+            loadCoreView('model_not_found', $data);
             die();
         }
     }
