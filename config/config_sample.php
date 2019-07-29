@@ -30,6 +30,12 @@ return [
     'controller_namespace' => 'Application\Controllers',
 
 
+    'middleware_base_url' => dirname(dirname(__FILE__)) . '/application/Middleware',
+
+
+    'middleware_namespace' => 'Application\Middleware',
+
+
     'core_view_base_url' => dirname(dirname(__FILE__)) . '/core/views',
 
 

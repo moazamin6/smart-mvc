@@ -6,6 +6,9 @@
  * */
 
 $route->setRoute('/', 'UserController@index');
+$route->setRoute('login', 'LoginController@login');
+$route->setRoute('login-post', 'LoginController@loginPost');
+$route->setRoute('home', 'LoginController@home');
 $route->setRoute('user/list', 'UserController@list');
 $route->setRoute('user/add', 'UserController@add');
 $route->setRoute('user/add_post', 'UserController@addPost');

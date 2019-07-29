@@ -12,6 +12,8 @@ namespace Core;
 class Request
 {
 
+    private static $instance;
+
     public function __construct()
     {
     }
@@ -23,5 +25,21 @@ class Request
             $reqObj->$key = $value;
         }
         return $reqObj;
+    }
+
+    public static function getRequestInstance($parameters = array())
+    {
+
+        if (self::$instance == null) {
+            self::$instance = new Request();
+        }
+
+        if ($parameters != null) {
+            foreach ($parameters as $key => $value) {
+                self::$instance->$key = $value;
+            }
+        }
+
+        return self::$instance;
     }
 }

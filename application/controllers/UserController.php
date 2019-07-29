@@ -5,19 +5,14 @@ namespace Application\Controllers;
 
 use Application\Models\User;
 use Core\Request;
+use Core\session\Session;
 use Core\SmartController;
 
 class UserController extends SmartController
 {
 
-    public function __construct()
-    {
-
-    }
-
     public function index()
     {
-
         $this->loadView('index');
     }
 

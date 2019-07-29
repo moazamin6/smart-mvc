@@ -70,12 +70,11 @@ class Route
                 //echo CONTROLLER_PATH . '/' . $controllerName . '.php';
                 //$path = CONTROLLER_PATH . '/' . $controllerName . '.php';
 
-                $request = new Request();
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-                    $this->parameters[] = $request->parametersToRequest($_POST);
+                    $this->parameters[] = Request::getRequestInstance($_POST);
                 } else {
-                    $this->parameters[] = $_GET;
+                    $this->parameters[] = Request::getRequestInstance($_GET);
                 }
                 $namespace = extractNamespace($path) . "\\" . $controllerName;
 

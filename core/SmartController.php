@@ -9,6 +9,8 @@
 namespace Core;
 
 
+use Exception;
+
 class SmartController
 {
 
@@ -32,6 +34,25 @@ class SmartController
 //            smartPrint('View Not Found');
 //            return;
 //        }
+    }
+
+    public function middleware($middleware)
+    {
+        $file_path = Config::get('middleware_base_url') . '/' . $middleware . '.php';
+        if (file_exists($file_path)) {
+
+            $middleware_namespace = extractNamespace($file_path) . "\\" . $middleware;
+            $middleware_obj = new $middleware_namespace();
+            $request = Request::getRequestInstance();
+            $response = $middleware_obj->handler($request);
+
+            //die();
+        } else {
+
+            $data['name'] = $middleware . '.php';
+            loadCoreView('model_not_found', $data);
+            die();
+        }
     }
 
     public function loadModel($model)
