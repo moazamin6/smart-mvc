@@ -8,13 +8,15 @@
 
 namespace App\Controllers;
 
-class HomeController
+
+
+class HomeController extends Controller
 {
 
     public function index($req, $res)
     {
 
-        var_dump($req);
-        return 'this is home controllers';
+        return $this->view->render($res,'home.twig');
+
     }
 }

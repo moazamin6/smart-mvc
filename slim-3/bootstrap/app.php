@@ -22,7 +22,7 @@ $app = new app($config);
 
 $container = $app->getContainer();
 
-$container['views'] = function ($cont) {
+$container['view'] = function ($cont) {
 
     $view = new Twig(__DIR__ . '/../resources/views', ["cache" => false]);
 
@@ -33,6 +33,6 @@ $container['views'] = function ($cont) {
 };
 $container['HomeController'] = function ($cont) {
 
-    return new HomeController;
+    return new HomeController($cont);
 };
 require __DIR__ . '/../app/routes.php';
