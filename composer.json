@@ -6,6 +6,7 @@
       "email": "moazamin6@gmail.com"
     }
   ],
+
   "require" :{
     "symfony/console": "2.6.7"
   },
