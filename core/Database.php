@@ -7,8 +7,6 @@
  */
 
 namespace Core;
-
-
 use PDO;
 use PDOException;
 
