@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    '9c3a89fd251357e704a0dc8c19f2725c' => $baseDir . '/core/smart_helper.php',
+    '49d9444b8aa378180a1adc585f131715' => $baseDir . '/core/smart_helper.php',
 );
