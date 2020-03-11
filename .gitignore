@@ -1,4 +1,4 @@
 .idea
 composer.lock
 config/config.php
-vendor
+/vendor
